@@ -414,13 +414,5 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
   boot();
-}
-
-/* ── GOOGLE LOGIN BUTTON (desktop) ── */
-const sbGoogleBtn = document.getElementById("sb-google-btn");
-if (sbGoogleBtn) {
-  sbGoogleBtn.addEventListener("click", () => {
-    alert("Google login akan diintegrasikan di sini.");
-  });
-}
-
+                         }
+     
