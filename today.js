@@ -243,11 +243,7 @@ if (mobMenuBtn)        mobMenuBtn.addEventListener('click', openMobSidebar);
 if (mobSidebarClose)   mobSidebarClose.addEventListener('click', closeMobSidebar);
 if (mobSidebarOverlay) mobSidebarOverlay.addEventListener('click', closeMobSidebar);
 
-const mobGoogleBtn = document.getElementById('mob-google-btn');
-if (mobGoogleBtn) {
-  mobGoogleBtn.addEventListener('click', () => {
-    alert('Google login akan diintegrasikan di sini.');
-  });
+
 }
 
 /* ══ INIT ══ */
@@ -256,3 +252,4 @@ updateProgress();
 initMobModal();
 
 })(); // end IIFE
+     
