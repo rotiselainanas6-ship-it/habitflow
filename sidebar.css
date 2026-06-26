@@ -1,0 +1,80 @@
+/* =========================
+   SHARED MOBILE SIDEBAR
+   Di-link dari index.html, stats.html, calendar.html
+========================= */
+
+.mob-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  backdrop-filter: blur(2px);
+}
+.mob-sidebar-overlay.open { display: block; }
+
+.mob-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 270px;
+  background: var(--card-bg);
+  z-index: 300;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+}
+.mob-sidebar.open { transform: translateX(0); }
+
+.mob-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid var(--silver);
+}
+
+.mob-sidebar-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--purple-dark);
+}
+
+.mob-sidebar-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-gray);
+  padding: 4px;
+  line-height: 1;
+}
+
+.mob-sidebar-body {
+  padding: 20px 18px;
+  flex: 1;
+}
+
+.mob-google-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--silver);
+  background: var(--card-bg);
+  color: var(--text-dark);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.mob-google-btn:hover {
+  background: var(--purple-bg);
+  border-color: var(--purple-dark);
+}

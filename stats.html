@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats - Habit Tracker</title>
+    <link rel="stylesheet" href="stats.css"/>
+    <link rel="stylesheet" href="sidebar.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="top-bar">
+        <i class="fa-solid fa-bars" id="mob-menu-btn"></i>
+        <h3>Stats</h3>
+        <i class="fa-solid fa-moon" id="moon-btn"></i>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="mob-sidebar-overlay" id="mob-sidebar-overlay"></div>
+      <div class="mob-sidebar" id="mob-sidebar">
+        <div class="mob-sidebar-header">
+          <div class="mob-sidebar-brand">🌱 HabitFlow</div>
+          <button class="mob-sidebar-close" id="mob-sidebar-close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="mob-sidebar-body">
+          <button class="mob-google-btn" id="mob-google-btn">
+            <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#EA4335" d="M24 9.5c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 3.1 29.5 1 24 1 14.8 1 7 6.7 3.7 14.6l7 5.4C12.4 13.7 17.7 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7c4.3-4 6.8-9.9 6.8-16.9z"/>
+              <path fill="#FBBC05" d="M10.7 28.6A14.6 14.6 0 0 1 9.5 24c0-1.6.3-3.1.8-4.6l-7-5.4A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l8.1-6.1z"/>
+              <path fill="#34A853" d="M24 47c5.5 0 10.1-1.8 13.5-4.9l-7.4-5.7c-1.8 1.2-4.1 1.9-6.6 1.9-6.2 0-11.5-4.2-13.4-9.9l-8 6.2C7 42.3 14.9 47 24 47z"/>
+            </svg>
+            Login with Google
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-tabs">
+        <span class="active">Overview</span>
+        <span>Trends</span>
+        <span>Calendar</span>
+      </div>
+
+      <div class="overall-header">
+        <h4>Overall Progress</h4>
+        <select>
+          <option>This Week</option>
+        </select>
+      </div>
+
+      <div class="persentase-progress">
+        <div class="persentase-progress-top">
+          <div class="stats-circle">
+            <div class="stats-inner-circle" id="stats-percent">0%</div>
+          </div>
+          <div class="text-compleated">
+            <h4 id="stats-greeting">Keep going!</h4>
+            <p id="stats-summary">Complete your habits to see progress.</p>
+          </div>
+        </div>
+        <div class="persentase-progress-bottom">
+          <div class="number-done">
+            <span id="stats-completed">0</span>
+            <span>completed</span>
+          </div>
+          <div class="number-done">
+            <span id="stats-skipped">0</span>
+            <span>skipped</span>
+          </div>
+          <div class="number-done">
+            <span id="stats-total">0</span>
+            <span>total</span>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="section-title">Habit Completion Rate</h4>
+
+      <div class="box-persentase-bar">
+        <div class="persentase">
+          <span>100%</span>
+          <span>75%</span>
+          <span>50%</span>
+          <span>25%</span>
+          <span>0%</span>
+        </div>
+        <div class="bar-rate-day" id="bar-chart"></div>
+      </div>
+
+      <h4 class="section-title">Habit Performance</h4>
+
+      <div class="progress-habits-week" id="habit-performance"></div>
+
+      <div class="bottom-nav">
+        <div class="nav-item" data-page="today">
+          <i class="fa-solid fa-house"></i>
+          <span>Today</span>
+        </div>
+        <div class="nav-item active" data-page="stats">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Stats</span>
+        </div>
+        <div class="nav-item" data-page="calendar">
+          <i class="fa-regular fa-calendar"></i>
+          <span>Calendar</span>
+        </div>
+      </div>
+
+    </div>
+    <script type="module" src="firebase.js"></script>
+    <script src="stats.js"></script>
+    <script src="sidebar.js"></script>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Habit Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link rel="stylesheet" href="desktop.css"/>
+<link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+  <!-- ═══════════ DESKTOP ═══════════ -->
+  <div class="desktop">
+    <div id="blobs"></div>
+
+    <svg width="0" height="0" style="position:absolute;pointer-events:none">
+      <defs>
+        <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#C4B5FD"/>
+          <stop offset="100%" stop-color="#7B5EA7"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div id="app">
+      <!-- SIDEBAR -->
+      <div id="sidebar">
+        <div class="sb-brand">
+          <div class="sb-logo">🌱</div>
+          <div>
+            <div class="sb-brand-name">HabitFlow</div>
+            <div class="sb-brand-sub">Build better days</div>
+          </div>
+        </div>
+
+        <button class="sb-google-btn" id="sb-google-btn">
+          <svg width="16" height="16" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EA4335" d="M24 9.5c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 3.1 29.5 1 24 1 14.8 1 7 6.7 3.7 14.6l7 5.4C12.4 13.7 17.7 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7c4.3-4 6.8-9.9 6.8-16.9z"/>
+            <path fill="#FBBC05" d="M10.7 28.6A14.6 14.6 0 0 1 9.5 24c0-1.6.3-3.1.8-4.6l-7-5.4A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l8.1-6.1z"/>
+            <path fill="#34A853" d="M24 47c5.5 0 10.1-1.8 13.5-4.9l-7.4-5.7c-1.8 1.2-4.1 1.9-6.6 1.9-6.2 0-11.5-4.2-13.4-9.9l-8 6.2C7 42.3 14.9 47 24 47z"/>
+          </svg>
+          <span>Login with Google</span>
+        </button>
+
+        <div class="sb-toggle" id="theme-btn">
+          <div class="ttrack" id="ttrack"><div class="tthumb"></div></div>
+          <span class="tlabel" id="tlbl">Dark mode</span>
+        </div>
+
+        <div class="sb-date-block">
+          <div class="day-name" id="sb-dayname">Wednesday</div>
+          <div class="day-num"  id="sb-daynum">24</div>
+          <div class="month-year" id="sb-monthyr">June 2026</div>
+        </div>
+
+        <div class="sb-ring-row">
+          <div class="ring-svg-w">
+            <svg id="ring-svg" width="80" height="80" viewBox="0 0 80 80">
+              <circle id="ring-track" cx="40" cy="40" r="34"/>
+              <circle id="ring-fill"  cx="40" cy="40" r="34"/>
+            </svg>
+            <div class="ring-c">
+              <span class="ring-pct" id="ring-pct">0%</span>
+              <span class="ring-sub">TODAY</span>
+            </div>
+          </div>
+          <div class="ring-meta">
+            <div class="rc" id="ring-ct">0/0</div>
+            <div class="rl">habits done</div>
+          </div>
+        </div>
+
+        <div class="sb-chips">
+          <div class="sbch"><div class="cn" id="sc-d">0</div><div class="cl">Done</div></div>
+          <div class="sbch"><div class="cn" id="sc-s">0</div><div class="cl">Skipped</div></div>
+          <div class="sbch"><div class="cn" id="sc-t">0</div><div class="cl">Total</div></div>
+        </div>
+
+        <div class="sb-streaks">
+          <div class="sbst"><div class="si">🔥</div><div class="sn" id="s-cur">0</div><div class="sl">Current</div></div>
+          <div class="sbst"><div class="si">🏆</div><div class="sn" id="s-best">0</div><div class="sl">Best</div></div>
+        </div>
+
+        <div class="sb-div"></div>
+
+        <button class="sb-add" id="open-modal">
+          <i class="fa-solid fa-plus"></i> Add habit
+        </button>
+
+        <div class="sb-section-lbl">My Habits</div>
+        <div id="sb-habit-list"></div>
+      </div>
+
+      <!-- MAIN -->
+      <div id="main">
+        <div id="topbar">
+          <div class="tb-left">
+            <div class="tb-greeting" id="tb-greet">Good morning</div>
+            <div class="tb-title" id="tb-title">Wednesday, June 24</div>
+          </div>
+          <div class="tb-right">
+            <span class="tb-days" id="tb-days">0 days tracked</span>
+            <div class="tb-streak"><span id="tb-fire">🔥</span>&nbsp;<span id="tb-streak-n">0</span> day streak</div>
+          </div>
+        </div>
+
+        <div id="grid">
+          <div class="bento">
+            <div class="bcard c2" id="card-bar">
+              <div class="bcard-head">Completion rate — last 7 days</div>
+              <div class="bar-chart" id="bar-chart"></div>
+            </div>
+            <div class="bcard c2" id="card-week">
+              <div class="bcard-head">This week</div>
+              <div class="week-strip" id="week-strip"></div>
+            </div>
+            <div class="bcard c2 r2" id="card-cal">
+              <div class="cal-nav">
+                <button class="cal-nb" id="cal-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                <h5 id="cal-title">June 2026</h5>
+                <button class="cal-nb" id="cal-next"><i class="fa-solid fa-chevron-right"></i></button>
+              </div>
+              <div class="cal-dh">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+                <span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="cal-g" id="cal-grid"></div>
+            </div>
+            <div class="bcard c2" id="card-perf">
+              <div class="bcard-head">Habit performance — 7 days</div>
+              <div id="perf-list"></div>
+            </div>
+            <div class="bcard c2" id="card-detail">
+              <div class="dd-date" id="dd-date">Select a day</div>
+              <div id="dd-items"><div class="dd-empty">Tap a date on the calendar.</div></div>
+            </div>
+            <div class="bcard c3" id="card-hm">
+              <div class="bcard-head" id="hm-head">Activity — June</div>
+              <div class="hm-grid" id="hm-grid"></div>
+            </div>
+            <div class="bcard c1 motiv-card" id="card-motiv">
+              <div class="motiv-quote" id="motiv-q">"We are what we repeatedly do."</div>
+              <div class="motiv-sub">— Aristotle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mob">
+      <i class="fa-solid fa-desktop"></i>
+      <p>This dashboard is designed for laptop or desktop.<br/>Open on a wider screen for the full experience.</p>
+    </div>
+
+    <!-- MODAL — di dalam .desktop agar tidak ganggu mobile -->
+    <div id="modal-ov">
+      <div class="modal">
+        <h3>New Habit</h3>
+        <div class="mf"><label>Name</label><input type="text" id="m-name" placeholder="e.g. Morning run"/></div>
+        <div class="mf"><label>Frequency</label><input type="text" id="m-time" placeholder="e.g. Daily · 7 AM"/></div>
+        <div class="mf"><label>Icon</label><div class="ep-grid" id="ep-grid"></div></div>
+        <div class="m-btns">
+          <button class="btn-c" id="close-modal">Cancel</button>
+          <button class="btn-s" id="save-habit">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+  </div><!-- .desktop -->
+
+  <!-- ═══════════ MOBILE ═══════════ -->
+  <div class="mobile">
+
+    <!-- MOBILE SIDEBAR OVERLAY -->
+    <div class="mob-sidebar-overlay" id="mob-sidebar-overlay"></div>
+    <div class="mob-sidebar" id="mob-sidebar">
+      <div class="mob-sidebar-header">
+        <div class="mob-sidebar-brand">🌱 HabitFlow</div>
+        <button class="mob-sidebar-close" id="mob-sidebar-close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="mob-sidebar-body">
+        <button class="mob-google-btn" id="mob-google-btn">
+          <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EA4335" d="M24 9.5c3.1 0 5.9 1.1 8.1 2.9l6-6C34.5 3.1 29.5 1 24 1 14.8 1 7 6.7 3.7 14.6l7 5.4C12.4 13.7 17.7 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7c4.3-4 6.8-9.9 6.8-16.9z"/>
+            <path fill="#FBBC05" d="M10.7 28.6A14.6 14.6 0 0 1 9.5 24c0-1.6.3-3.1.8-4.6l-7-5.4A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l8.1-6.1z"/>
+            <path fill="#34A853" d="M24 47c5.5 0 10.1-1.8 13.5-4.9l-7.4-5.7c-1.8 1.2-4.1 1.9-6.6 1.9-6.2 0-11.5-4.2-13.4-9.9l-8 6.2C7 42.3 14.9 47 24 47z"/>
+          </svg>
+          Login with Google
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="top-bar">
+        <i class="fa-solid fa-bars" id="mob-menu-btn"></i>
+        <h3>Today</h3>
+        <i class="fa-solid fa-moon" id="moon-btn"></i>
+      </div>
+
+      <div class="progress-border">
+        <div class="progress-text">
+          <p>Progress Today</p>
+          <p class="many-habits">0/0</p>
+          <p>habits completed</p>
+        </div>
+        <div class="circle">
+          <div class="inner-circle">0%</div>
+        </div>
+      </div>
+
+      <div class="habits">
+        <h4>My Habits</h4>
+        <h4 class="add-habits">+ Add Habits</h4>
+      </div>
+
+      <div class="habit-list"></div>
+
+      <div class="bottom-nav">
+        <div class="nav-item active" data-page="today">
+          <i class="fa-solid fa-house"></i>
+          <span>Today</span>
+        </div>
+        <div class="nav-item" data-page="stats">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Stats</span>
+        </div>
+        <div class="nav-item" data-page="calendar">
+          <i class="fa-regular fa-calendar"></i>
+          <span>Calendar</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MOBILE MODAL ADD HABIT -->
+    <div id="mob-modal-ov">
+      <div class="mob-modal">
+        <div class="mob-modal-header">
+          <h3>New Habit</h3>
+          <button class="mob-modal-close" id="mob-close-modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="mob-mf">
+          <label>Name</label>
+          <input type="text" id="mob-m-name" placeholder="e.g. Morning run"/>
+        </div>
+        <div class="mob-mf">
+          <label>Frequency</label>
+          <input type="text" id="mob-m-time" placeholder="e.g. Daily · 7 AM"/>
+        </div>
+        <div class="mob-mf">
+          <label>Icon</label>
+          <div class="mob-ep-grid" id="mob-ep-grid"></div>
+        </div>
+        <div class="mob-m-btns">
+          <button class="mob-btn-c" id="mob-cancel-modal">Cancel</button>
+          <button class="mob-btn-s" id="mob-save-habit">Save</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .mobile -->
+
+  <!-- Firebase sync — load pertama, sebagai ES module -->
+  <script type="module" src="firebase.js"></script>
+  <!-- App scripts -->
+  <script src="today.js"></script>
+  <script src="desktop.js"></script>
+
+</body>
+</html>
