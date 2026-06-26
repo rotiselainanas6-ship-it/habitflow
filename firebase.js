@@ -4,22 +4,25 @@
    calendar.js, dan sidebar.js di setiap HTML.
 ══════════════════════════════════════════════════════════════ */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  signOut,
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  onSnapshot,
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+/* ══ DIAGNOSTIC: tangkap & tampilkan error lewat alert() ══
+   Sementara untuk debugging di HP (tanpa perlu DevTools).
+   Bisa dihapus lagi nanti kalau sudah ketemu akar masalahnya.   */
+let initializeApp, getAuth, GoogleAuthProvider, signInWithRedirect,
+    getRedirectResult, signOut, onAuthStateChanged,
+    getFirestore, doc, getDoc, setDoc, onSnapshot;
+
+try {
+  const appMod  = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js");
+  const authMod = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js");
+  const fsMod   = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js");
+
+  ({ initializeApp } = appMod);
+  ({ getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } = authMod);
+  ({ getFirestore, doc, getDoc, setDoc, onSnapshot } = fsMod);
+} catch (err) {
+  alert("⚠️ GAGAL MEMUAT FIREBASE SDK dari gstatic.com\n\n" + (err && err.message ? err.message : err));
+  throw err; // hentikan eksekusi, sisanya tidak relevan kalau SDK gagal load
+}
 
 /* ══ CONFIG ══ */
 const firebaseConfig = {
@@ -32,9 +35,15 @@ const firebaseConfig = {
   measurementId: "G-KG2J3Y2K33",
 };
 
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
+let app, auth, db;
+try {
+  app  = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db   = getFirestore(app);
+} catch (err) {
+  alert("⚠️ GAGAL INISIALISASI FIREBASE (cek firebaseConfig)\n\n" + (err && err.message ? err.message : err));
+  throw err;
+}
 
 let currentUser   = null;
 let unsubSnapshot = null;
@@ -121,6 +130,7 @@ function showToast(msg) {
 
 /* ══ AUTH ACTIONS ══ */
 async function handleGoogleLogin() {
+  alert("🔵 Tombol diklik — mencoba signInWithRedirect...\nUser agent:\n" + navigator.userAgent);
   try {
     const provider = new GoogleAuthProvider();
     await signInWithRedirect(auth, provider);
@@ -273,6 +283,7 @@ getRedirectResult(auth).then((result) => {
 }).catch((err) => {
   if (err.code !== "auth/cancelled-popup-request") {
     console.error("[HabitFlow] redirect error:", err.code, err.message);
+    alert("⚠️ ERROR SESUDAH REDIRECT GOOGLE\n\nCode: " + err.code + "\n" + err.message);
   }
 });
 
