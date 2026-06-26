@@ -15,7 +15,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
@@ -183,7 +184,7 @@ function updateAuthUI(user) {
 async function handleGoogleLogin() {
   try {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
     // onAuthStateChanged yang akan handle sisanya
   } catch (err) {
     if (err.code !== "auth/popup-closed-by-user") {
@@ -288,3 +289,19 @@ if (document.readyState === "loading") {
 } else {
   init();
 }
+
+/* ══════════════════════════════════════════════════════════════
+   HANDLE REDIRECT RESULT
+   Setelah signInWithRedirect, user kembali ke halaman ini.
+   getRedirectResult() menangkap hasilnya.
+══════════════════════════════════════════════════════════════ */
+getRedirectResult(auth).then((result) => {
+  if (result && result.user) {
+    // Login berhasil via redirect — onAuthStateChanged akan handle sisanya
+    showToast(`☁️ Login berhasil sebagai ${result.user.displayName}`);
+  }
+}).catch((err) => {
+  if (err.code !== "auth/cancelled-popup-request") {
+    console.error("[HabitFlow] Redirect result error:", err.code, err.message);
+  }
+});
