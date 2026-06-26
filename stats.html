@@ -111,6 +111,16 @@
       </div>
 
     </div>
+    <!-- DIAGNOSTIC: tangkap error global, tampilkan lewat alert() di HP -->
+    <script>
+      window.addEventListener('error', function (e) {
+        var msg = e.message || (e.target && (e.target.src || e.target.href)) || 'Unknown error';
+        alert('⚠️ GLOBAL ERROR\n\n' + msg + (e.filename ? '\n(' + e.filename + ':' + e.lineno + ')' : ''));
+      }, true);
+      window.addEventListener('unhandledrejection', function (e) {
+        alert('⚠️ UNHANDLED PROMISE REJECTION\n\n' + (e.reason && e.reason.message ? e.reason.message : e.reason));
+      });
+    </script>
     <script type="module" src="firebase.js"></script>
     <script defer src="stats.js"></script>
     <script defer src="sidebar.js"></script>
