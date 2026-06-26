@@ -244,12 +244,9 @@ if (mobSidebarClose)   mobSidebarClose.addEventListener('click', closeMobSidebar
 if (mobSidebarOverlay) mobSidebarOverlay.addEventListener('click', closeMobSidebar);
 
 
-}
-
 /* ══ INIT ══ */
 renderHabits();
 updateProgress();
 initMobModal();
 
 })(); // end IIFE
-     
