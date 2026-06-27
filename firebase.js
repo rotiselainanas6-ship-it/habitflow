@@ -4,9 +4,6 @@
    calendar.js, dan sidebar.js di setiap HTML.
 ══════════════════════════════════════════════════════════════ */
 
-/* ══ DIAGNOSTIC: tangkap & tampilkan error lewat alert() ══
-   Sementara untuk debugging di HP (tanpa perlu DevTools).
-   Bisa dihapus lagi nanti kalau sudah ketemu akar masalahnya.   */
 let initializeApp, getAuth, GoogleAuthProvider, signInWithRedirect,
     getRedirectResult, signOut, onAuthStateChanged,
     getFirestore, doc, getDoc, setDoc, onSnapshot;
@@ -20,8 +17,8 @@ try {
   ({ getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } = authMod);
   ({ getFirestore, doc, getDoc, setDoc, onSnapshot } = fsMod);
 } catch (err) {
-  alert("⚠️ GAGAL MEMUAT FIREBASE SDK dari gstatic.com\n\n" + (err && err.message ? err.message : err));
-  throw err; // hentikan eksekusi, sisanya tidak relevan kalau SDK gagal load
+  console.error("[HabitFlow] Gagal memuat Firebase SDK:", err);
+  throw err;
 }
 
 /* ══ CONFIG ══ */
@@ -41,7 +38,7 @@ try {
   auth = getAuth(app);
   db   = getFirestore(app);
 } catch (err) {
-  alert("⚠️ GAGAL INISIALISASI FIREBASE (cek firebaseConfig)\n\n" + (err && err.message ? err.message : err));
+  console.error("[HabitFlow] Gagal inisialisasi Firebase:", err);
   throw err;
 }
 
@@ -130,13 +127,13 @@ function showToast(msg) {
 
 /* ══ AUTH ACTIONS ══ */
 async function handleGoogleLogin() {
-  alert("🔵 Tombol diklik — mencoba signInWithRedirect...\nUser agent:\n" + navigator.userAgent);
   try {
     const provider = new GoogleAuthProvider();
     await signInWithRedirect(auth, provider);
   } catch (err) {
     if (err.code !== "auth/popup-closed-by-user") {
-      alert("Login gagal: " + err.message);
+      console.error("[HabitFlow] Login gagal:", err);
+      showToast("Login gagal. Coba lagi.");
     }
   }
 }
@@ -283,7 +280,6 @@ getRedirectResult(auth).then((result) => {
 }).catch((err) => {
   if (err.code !== "auth/cancelled-popup-request") {
     console.error("[HabitFlow] redirect error:", err.code, err.message);
-    alert("⚠️ ERROR SESUDAH REDIRECT GOOGLE\n\nCode: " + err.code + "\n" + err.message);
   }
 });
 
@@ -292,3 +288,4 @@ function init() { updateAuthUI(null); }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
 } else { init(); }
+                                      
